@@ -1,3 +1,0 @@
-<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <ui:Label tabindex="-1" text="  CyberAegis...&#10;&#10;" parse-escape-sequences="true" display-tooltip-when-elided="true" name="StartText" style="-unity-font: url(&quot;project://database/Assets/Fonts/ZeroCool_Font_1_0/ZeroCool.ttf?fileID=12800000&amp;guid=0c7016496eb39eb47a2a7467a1f9b969&amp;type=3#ZeroCool&quot;); font-size: 50px; -unity-font-definition: initial; -unity-text-outline-color: rgba(255, 255, 255, 0); color: rgb(255, 255, 255); white-space: nowrap; top: 10px;" />
-</ui:UXML>
