@@ -1082,8 +1082,8 @@ Transform:
   m_GameObject: {fileID: 1913571610}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.06, y: 2, z: 0}
-  m_LocalScale: {x: 0.9778264, y: 0.7446461, z: 0.7377}
+  m_LocalPosition: {x: -1.57, y: 2.07, z: 0}
+  m_LocalScale: {x: 0.87181383, y: 0.73932296, z: 0.7377}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -1414,8 +1414,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 10, y: 108}
-  m_SizeDelta: {x: 345.81, y: 58.21}
+  m_AnchoredPosition: {x: 0, y: 158}
+  m_SizeDelta: {x: 535.54, y: 69.59}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2144209025
 MonoBehaviour:
@@ -1439,7 +1439,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 0c7016496eb39eb47a2a7467a1f9b969, type: 3}
-    m_FontSize: 24
+    m_FontSize: 28
     m_FontStyle: 0
     m_BestFit: 1
     m_MinSize: 2
@@ -1539,7 +1539,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 1
   m_TargetDisplay: 0
 --- !u!224 &2146555304
 RectTransform:
