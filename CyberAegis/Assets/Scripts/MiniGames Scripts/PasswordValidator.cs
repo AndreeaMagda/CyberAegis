@@ -18,7 +18,8 @@ public class PasswordValidator : MonoBehaviour
         nameInput.onEndEdit.AddListener(SetPlayerName);
         passwordInput.onValueChanged.AddListener(ValidatePassword);
     }
-
+    
+    //string name is useless but unity needs it for the event listener
     public void SetPlayerName(string name)
     {
         nameInput.gameObject.SetActive(false);
