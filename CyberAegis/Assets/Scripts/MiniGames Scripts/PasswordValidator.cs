@@ -9,6 +9,7 @@ public class PasswordValidator : MonoBehaviour
     public TMP_InputField passwordInput;
     public TMP_Text feedbackText;
     public TMP_InputField nameInput;
+    public TMP_Text player;
 
     public string playerName="";
 
@@ -20,9 +21,9 @@ public class PasswordValidator : MonoBehaviour
 
     public void SetPlayerName(string name)
     {
-        nameInput.gameObject.SetActive(false);  
+        nameInput.gameObject.SetActive(false);
         passwordInput.gameObject.SetActive(true);
-        playerName = name;
+        playerName = nameInput.text;
         Debug.Log("Player name set to: " + playerName);
     }
 
