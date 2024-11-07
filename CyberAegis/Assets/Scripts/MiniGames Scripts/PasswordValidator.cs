@@ -22,7 +22,6 @@ public class PasswordValidator : MonoBehaviour
     //string name is useless but unity needs it for the event listener
     public void SetPlayerName(string name)
     {
-        nameInput.gameObject.SetActive(false);
         passwordInput.gameObject.SetActive(true);
         playerName = nameInput.text;
         Debug.Log("Player name set to: " + playerName);

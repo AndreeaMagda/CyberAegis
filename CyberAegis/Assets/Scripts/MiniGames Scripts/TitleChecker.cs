@@ -11,6 +11,7 @@ public class TitleInputManager : MonoBehaviour
     public GameObject feedbackObject;
     public Button restartButton; // Reference to the restart button
     public float timerDuration = 120f;
+    public Text Books;
 
     private string[] correctTitles = { "MAESTRUL INTERNETULUI", "PAROLA PIERDUTA", "SIGURANTA ONLINE", "CALATORIA CIBERNETICA" };
     private int currentTitleIndex = 0;
@@ -82,6 +83,7 @@ public class TitleInputManager : MonoBehaviour
             // Dacă toate titlurile sunt introduse corect
             if (currentTitleIndex == correctTitles.Length)
             {
+                Books.gameObject.SetActive(false);
                 timerActive = false;
                 GenerateRandomCode();
                 feedbackText.text = "Felicitări! Codul dvs. este " + generatedCode;
