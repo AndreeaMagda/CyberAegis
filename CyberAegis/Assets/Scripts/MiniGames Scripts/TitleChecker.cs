@@ -8,6 +8,8 @@ public class TitleInputManager : MonoBehaviour
     public Text feedbackText;
     public Text timerText;
     public Text temporaryText;
+    public GameObject feedbackObject;
+    public Button restartButton; // Reference to the restart button
     public float timerDuration = 120f;
 
     private string[] correctTitles = { "MAESTRUL INTERNETULUI", "PAROLA PIERDUTA", "SIGURANTA ONLINE", "CALATORIA CIBERNETICA" };
@@ -19,21 +21,34 @@ public class TitleInputManager : MonoBehaviour
 
     void Start()
     {
+        InitializeGame();
+        restartButton.onClick.AddListener(ResetGame); // Assign Restart function to the button
+        restartButton.gameObject.SetActive(false); // Initially hide the restart button
+    }
+
+    private void InitializeGame()
+    {
         inputField.text = "";
         feedbackText.gameObject.SetActive(false);
+        feedbackObject.SetActive(false);
         timerText.gameObject.SetActive(true);
         temporaryText.gameObject.SetActive(true);
+        ResetTimer();
+        inputField.onEndEdit.AddListener(OnTitleEntered);
+        ShowTemporaryText();
+    }
+
+    public void ResetTimer()
+    {
+        StopAllCoroutines(); // Stop any existing coroutines to prevent multiple timers running simultaneously
         timeRemaining = timerDuration;
         timerActive = true;
-        inputField.onEndEdit.AddListener(OnTitleEntered);
         StartCoroutine(TimerCountdown());
-        ShowTemporaryText();
-       //s ShowTemporaryText("Introduceți titlul corect pentru a continua...");
     }
+
 
     private void ShowTemporaryText()
     {
-      //  temporaryText.text = text;
         temporaryText.gameObject.SetActive(true);
     }
 
@@ -41,9 +56,9 @@ public class TitleInputManager : MonoBehaviour
     {
         if (!timerActive) return;
 
+        // Modul de introducere a codului
         if (codeEntryMode)
         {
-            // Testul pentru codul introdus
             if (enteredText == generatedCode)
             {
                 DisplaySuccessMessage();
@@ -51,25 +66,31 @@ public class TitleInputManager : MonoBehaviour
             else
             {
                 feedbackText.text = "Cod incorect. Reîncercați.";
+                feedbackObject.SetActive(true);
                 feedbackText.gameObject.SetActive(true);
             }
             return;
         }
 
+        // Verifică titlul introdus
         if (enteredText.ToUpper() == correctTitles[currentTitleIndex])
         {
             currentTitleIndex++;
             inputField.text = "";
+            feedbackObject.SetActive(false);
 
+            // Dacă toate titlurile sunt introduse corect
             if (currentTitleIndex == correctTitles.Length)
             {
                 timerActive = false;
                 GenerateRandomCode();
                 feedbackText.text = "Felicitări! Codul dvs. este " + generatedCode;
+                feedbackObject.SetActive(true);
                 feedbackText.gameObject.SetActive(true);
-                inputField.placeholder.GetComponent<Text>().text = "Introduceți codul"; 
+                inputField.placeholder.GetComponent<Text>().text = "Introduceți codul";
                 inputField.text = "";
-                codeEntryMode = true;
+                codeEntryMode = true; // Trecem în modul de introducere a codului
+                restartButton.gameObject.SetActive(true); // Afișează butonul de restart pe succes
             }
         }
         else
@@ -104,11 +125,11 @@ public class TitleInputManager : MonoBehaviour
 
     private void DisplaySuccessMessage()
     {
-        // Ascunde inputField-ul și timer-ul și afișează mesajul de succes
         inputField.gameObject.SetActive(false);
         timerText.gameObject.SetActive(false);
-        temporaryText.gameObject.SetActive(false);// Ascunde textul temporar
+        temporaryText.gameObject.SetActive(false);
         feedbackText.text = "AȚI REUȘIT!";
+        feedbackObject.SetActive(true);
         feedbackText.gameObject.SetActive(true);
     }
 
@@ -116,12 +137,20 @@ public class TitleInputManager : MonoBehaviour
     {
         feedbackText.text = message;
         temporaryText.gameObject.SetActive(false);
+        feedbackObject.SetActive(true);
         feedbackText.gameObject.SetActive(true);
         inputField.placeholder.GetComponent<Text>().text = "Introduceți titlul";
         inputField.text = "";
         currentTitleIndex = 0;
-        timeRemaining = timerDuration;
-        timerActive = true;
+        ResetTimer();
         codeEntryMode = false;
+        restartButton.gameObject.SetActive(true); // Show the restart button on incorrect entry
+    }
+
+    public void ResetGame()
+    {
+        // Reset all game elements and hide the restart button
+        InitializeGame();
+        restartButton.gameObject.SetActive(false);
     }
 }
