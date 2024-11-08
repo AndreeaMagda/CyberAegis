@@ -9,7 +9,8 @@ public class TitleInputManager : MonoBehaviour
     public Text timerText;
     public Text booksText;
     public GameObject feedbackObject;
-    public Button restartButton; // Reference to the restart button
+    public Button restartButton;
+    public Button verifyCodeButton; // Button for verifying the code
     public float timerDuration = 120f;
 
     private string[] correctTitles = { "MAESTRUL INTERNETULUI", "PAROLA PIERDUTA", "SIGURANTA ONLINE", "CALATORIA CIBERNETICA" };
@@ -24,6 +25,9 @@ public class TitleInputManager : MonoBehaviour
         InitializeGame();
         restartButton.onClick.AddListener(ResetGame); // Assign Restart function to the button
         restartButton.gameObject.SetActive(false); // Initially hide the restart button
+
+        verifyCodeButton.onClick.AddListener(OnCodeVerification); // Assign code verification to button
+        verifyCodeButton.gameObject.SetActive(false); // Hide verify button until code entry mode
     }
 
     private void InitializeGame()
@@ -46,7 +50,6 @@ public class TitleInputManager : MonoBehaviour
         StartCoroutine(TimerCountdown());
     }
 
-
     private void ShowTemporaryText()
     {
         booksText.gameObject.SetActive(true);
@@ -59,43 +62,41 @@ public class TitleInputManager : MonoBehaviour
         Debug.Log("Entered Text: " + enteredText);
         Debug.Log("Generated Code: " + generatedCode);
 
-
         if (!timerActive) return;
-        Debug.Log("Entered Text: " + enteredText);
-        // Modul de introducere a codului
-        if (enteredText == generatedCode)
+
+        if (codeEntryMode)
         {
-            DisplaySuccessMessage();
-        }
-        else
-        {
-            feedbackText.text = "Cod incorect. Reîncercați.";
-            feedbackObject.SetActive(true);
-            feedbackText.gameObject.SetActive(true);
+            // Do nothing in OnTitleEntered when in code entry mode, as code is verified by button
+            return;
         }
 
-
-        // Verifică titlul introdus
+        // Title entry mode
         if (enteredText.ToUpper() == correctTitles[currentTitleIndex])
         {
             currentTitleIndex++;
             inputField.text = "";
             feedbackObject.SetActive(false);
 
-            // Dacă toate titlurile sunt introduse corect
             if (currentTitleIndex == correctTitles.Length)
             {
                 booksText.gameObject.SetActive(false);
                 timerActive = false;
                 GenerateRandomCode();
+
+                // Show the generated code and switch to code entry mode
                 feedbackText.text = "Felicitări! Codul dvs. este " + generatedCode;
                 feedbackObject.SetActive(true);
                 feedbackText.gameObject.SetActive(true);
+                restartButton.gameObject.SetActive(false);
+
+                // Change the placeholder text to prompt for code input
                 inputField.placeholder.GetComponent<Text>().text = "Introduceți codul";
                 inputField.text = "";
-                codeEntryMode = true; // Trecem în modul de introducere a codului
-                Debug.Log("codeEntryMode set to true after all titles are entered.");
-                restartButton.gameObject.SetActive(true); // Afișează butonul de restart pe succes
+
+                // Activate code entry mode and show the verify button
+                codeEntryMode = true;
+                verifyCodeButton.gameObject.SetActive(true); // Show verify button for code entry
+               // restartButton.gameObject.SetActive(true); // Show the restart button on success
             }
         }
         else
@@ -149,7 +150,7 @@ public class TitleInputManager : MonoBehaviour
         inputField.text = "";
         currentTitleIndex = 0;
         ResetTimer();
-        
+
         restartButton.gameObject.SetActive(true); // Show the restart button on incorrect entry
     }
 
@@ -158,5 +159,27 @@ public class TitleInputManager : MonoBehaviour
         // Reset all game elements and hide the restart button
         InitializeGame();
         restartButton.gameObject.SetActive(false);
+        verifyCodeButton.gameObject.SetActive(false); // Hide the verify button when restarting
+    }
+
+    // Method for code verification
+    public void OnCodeVerification()
+    {
+        string enteredText = inputField.text.Trim();
+        if (enteredText == generatedCode)
+        {
+            DisplaySuccessMessage();
+            timerActive = false; // Stop the timer after successful entry
+            inputField.interactable = false;
+            verifyCodeButton.gameObject.SetActive(false); // Hide the verify button after successful entry
+            restartButton.gameObject.SetActive(false); // Show the restart button after successful entry
+
+        }
+        else
+        {
+            feedbackText.text = "Cod incorect. Reîncercați.";
+            feedbackObject.SetActive(true);
+            feedbackText.gameObject.SetActive(true);
+        }
     }
 }
