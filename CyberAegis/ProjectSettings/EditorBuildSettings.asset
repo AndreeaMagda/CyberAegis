@@ -6,15 +6,24 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/AuthScene.unity
-    guid: 04db3a2980b06bb4f83b3a96774c4498
-  - enabled: 1
-    path: Assets/Scenes/RegisterScene.unity
-    guid: b011da4b94ed7fb41b52b534946fe759
-  - enabled: 1
-    path: Assets/Scenes/LoginScene.unity
-    guid: 97c21771adcd39340815fb4eb0356729
+    path: Assets/Scenes/PrincipalMenuScene.unity
+    guid: 3f07e10b206307d44a9e6288d6513a58
   - enabled: 1
     path: Assets/Scenes/MainScene.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02
+  - enabled: 1
+    path: Assets/Scenes/DailyCheckIn.unity
+    guid: 315fb11e864987842b6c4e2d825d2177
+  - enabled: 1
+    path: Assets/Scenes/MiniGamesScene.unity
+    guid: 8c352fe1e06ec1947aadee498366023b
+  - enabled: 1
+    path: Assets/Scenes/SettingsScene.unity
+    guid: 0935ffdbb53b3784fa260cf68eb60f8e
+  - enabled: 1
+    path: Assets/Scenes/TreeScenes/MainTreeScene.unity
+    guid: 6ca3e7429788cd74a91bf3249aab604d
+  - enabled: 1
+    path: Assets/Scenes/ShoppingScenes/MainShoppingScene.unity
+    guid: 65262fa156ae7934988dcb001b978ac7
   m_configObjects: {}
