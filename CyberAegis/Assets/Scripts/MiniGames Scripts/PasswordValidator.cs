@@ -1,75 +1,60 @@
-using System.Collections;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
 
 public class PasswordValidator : MonoBehaviour
 {
+    [Header("UI Elements")]
     public TMP_InputField passwordInput;
     public TMP_Text feedbackText;
     public TMP_InputField nameInput;
-    public TMP_Text player;
 
-    public string playerName="";
+    private string playerName = "";
 
-    void Start()
+    private void Start()
     {
         nameInput.onEndEdit.AddListener(SetPlayerName);
         passwordInput.onValueChanged.AddListener(ValidatePassword);
     }
-    
-    //string name is useless but unity needs it for the event listener
-    public void SetPlayerName(string name)
+
+    private void SetPlayerName(string name)
     {
-        passwordInput.gameObject.SetActive(true);
         playerName = nameInput.text;
         Debug.Log("Player name set to: " + playerName);
-    }
-
-    public void OnApplicationQuit()
-    {
-       passwordInput.gameObject.SetActive(false);
-    }
-
-    public void ValidatePassword(string password)
-    {
         nameInput.gameObject.SetActive(false);
+        passwordInput.gameObject.SetActive(true);
+    }
+
+    private void ValidatePassword(string password)
+    {
+        var feedbackMessages = new List<string>();
         bool isValid = true;
-        string feedback = "Password must:\n";
 
-        if (password.Length < 8)
+        var validationChecks = new List<(bool condition, string message)>
         {
-            feedback += "- Be at least 8 characters\n";
-            isValid = false;
-        }
-        if (!System.Text.RegularExpressions.Regex.IsMatch(password, "[A-Z]"))
+            (password.Length >= 8, "- Be at least 8 characters"),
+            (Regex.IsMatch(password, "[A-Z]"), "- Contain an uppercase letter"),
+            (Regex.IsMatch(password, "[a-z]"), "- Contain a lowercase letter"),
+            (Regex.IsMatch(password, "[0-9]"), "- Contain a number"),
+            (Regex.IsMatch(password, "[!@#$%^&*]"), "- Contain a special character"),
+            (!password.Contains(playerName), "- Not contain your name")
+        };
+
+        foreach (var (condition, message) in validationChecks)
         {
-            feedback += "- Contain an uppercase letter\n";
-            isValid = false;
-        }
-        if (!System.Text.RegularExpressions.Regex.IsMatch(password, "[a-z]"))
-        {
-            feedback += "- Contain a lowercase letter\n";
-            isValid = false;
-        }
-        if (!System.Text.RegularExpressions.Regex.IsMatch(password, "[0-9]"))
-        {
-            feedback += "- Contain a number\n";
-            isValid = false;
-        }
-        if (!System.Text.RegularExpressions.Regex.IsMatch(password, "[!@#$%^&*]"))
-        {
-            feedback += "- Contain a special character\n";
-            isValid = false;
+            if (!condition)
+            {
+                feedbackMessages.Add(message);
+                isValid = false;
+            }
         }
 
-        if (password.Contains(playerName))
-        {
-            feedback += "- Not contain your name\n";
-            isValid = false;
-        }
+        feedbackText.text = isValid ? "Password is secure!" : $"Password must:\n{string.Join("\n", feedbackMessages)}";
+    }
 
-        feedbackText.text = isValid ? "Password is secure!" : feedback;
+    private void OnApplicationQuit()
+    {
+        passwordInput.gameObject.SetActive(false);
     }
 }
