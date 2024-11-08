@@ -15,7 +15,7 @@ EditorBuildSettings:
     path: Assets/Scenes/DailyCheckIn.unity
     guid: 315fb11e864987842b6c4e2d825d2177
   - enabled: 1
-    path: Assets/Scenes/MiniGames/MiniGamesScene.unity
+    path: Assets/Scenes/MiniGames/BooksGame.unity
     guid: 8c352fe1e06ec1947aadee498366023b
   - enabled: 1
     path: Assets/Scenes/SettingsScene.unity
@@ -26,4 +26,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/ShoppingScenes/MainShoppingScene.unity
     guid: 65262fa156ae7934988dcb001b978ac7
+  - enabled: 1
+    path: Assets/Scenes/TreeScenes/LearningManagement.unity
+    guid: 4cd394ae485b21e4b90cd639b2edef6b
+  - enabled: 1
+    path: Assets/Scenes/MiniGames/PasswordMiniGame.unity
+    guid: 5f1bc4c44ffcc534f89020f0d972229f
   m_configObjects: {}
