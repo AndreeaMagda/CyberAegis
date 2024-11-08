@@ -19,6 +19,7 @@ public class CharacterSpawner : MonoBehaviour
     public float friendProbability = 0.7f;
 
     private InteractionPrompt interaction;
+    private bool CanSpawn = true;
 
     private void Start()
     {
@@ -30,25 +31,31 @@ public class CharacterSpawner : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(spawnInterval);
-
-            // Choose a random spawn point
-            Transform spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)];
-
-            // Determine if the spawned character will be a friend or a stranger
-            bool isFriend = Random.value < friendProbability;
-            GameObject characterToSpawn = Random.value < friendProbability ? friendPrefab : strangerPrefab;
-
-            // Instantiate the chosen character at the selected spawn point
-            GameObject spawnedCharacter = Instantiate(characterToSpawn, spawnPoint.position, spawnPoint.rotation);
-
-            if (interaction != null)
+            if (CanSpawn)
             {
-                interaction.ShowPrompt(isFriend, spawnedCharacter);
+                yield return new WaitForSeconds(spawnInterval);
 
-              
+                // Choose a random spawn point
+                Transform spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)];
 
+                // Determine if the spawned character will be a friend or a stranger
+                bool isFriend = Random.value < friendProbability;
+                GameObject characterToSpawn = Random.value < friendProbability ? friendPrefab : strangerPrefab;
+
+                // Instantiate the chosen character at the selected spawn point
+                GameObject spawnedCharacter = Instantiate(characterToSpawn, spawnPoint.position, spawnPoint.rotation);
+
+                if (interaction != null)
+                {
+                    CanSpawn = false;
+                    interaction.ShowPrompt(isFriend, spawnedCharacter);
+                }
             }
         }
+    }
+    // Method to allow spawning again, called from InteractionPrompt after a choice is made
+    public void EnableSpawning()
+    {
+        canSpawn = true;
     }
 }

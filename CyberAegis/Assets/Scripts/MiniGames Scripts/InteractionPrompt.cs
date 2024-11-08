@@ -12,11 +12,13 @@ public class InteractionPrompt : MonoBehaviour
 
     private bool isFriend;
     private GameObject currentCharacter;
-    private ScoreManager score;
+    private ScoreManager scoreManager;
+    private CharacterSpawner characterSpawner
 
     private void Start()
     {
-        score = FindObjectOfType<ScoreManager>();
+        scoreManager = FindObjectOfType<ScoreManager>();
+        characterSpawner = FindObjectOfType<CharacterSpawner>();
         
         promptPanel.SetActive(false);
 
@@ -30,7 +32,6 @@ public class InteractionPrompt : MonoBehaviour
         isFriend = characterIsFriend;
         currentCharacter = character;
 
-        
         promptText.text = "Is this a friend or a stranger?";
         promptPanel.SetActive(true);
     }
@@ -41,12 +42,12 @@ public class InteractionPrompt : MonoBehaviour
         if (playerThinksFriend == isFriend)
         {
             Debug.Log("Correct! That was a " + (isFriend ? "friend." : "stranger."));
-            score.AddScore(10);
+            scoreManager.AddScore(10);
         }
         else
         {
             Debug.Log("Incorrect. That was a " + (isFriend ? "friend." : "stranger.") + ".");
-            score.AddScore(-5);
+            scoreManager.AddScore(-5);
         }
 
 
@@ -58,5 +59,10 @@ public class InteractionPrompt : MonoBehaviour
 
         // Hide the prompt panel after a choice is made
         promptPanel.SetActive(false);
+
+        if(characterSpawner != null)
+        {
+            characterSpawner.EnableSpawning();
+        }
     }
 }
