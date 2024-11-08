@@ -56,6 +56,6 @@ public class CharacterSpawner : MonoBehaviour
     // Method to allow spawning again, called from InteractionPrompt after a choice is made
     public void EnableSpawning()
     {
-        canSpawn = true;
+        CanSpawn = true;
     }
 }

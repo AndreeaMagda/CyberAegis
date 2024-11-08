@@ -13,7 +13,7 @@ public class InteractionPrompt : MonoBehaviour
     private bool isFriend;
     private GameObject currentCharacter;
     private ScoreManager scoreManager;
-    private CharacterSpawner characterSpawner
+    private CharacterSpawner characterSpawner;
 
     private void Start()
     {
